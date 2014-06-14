@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
+// 空白頁項目範本已記錄在 http://go.microsoft.com/fwlink/?LinkId=234238
+
+namespace final
+{
+    /// <summary>
+    /// 可以在本身使用或巡覽至框架內的空白頁面。
+    /// </summary>
+    public sealed partial class MainPage : Page
+    {
+        public MainPage()
+        {
+            this.InitializeComponent();
+        }
+
+        double total;
+
+        private void word1(object sender, RoutedEventArgs e)
+        {
+            outdata.Text = "一份薯條、一顆蛋、一片番茄、兩片培根、一份漢堡麵包  價格 200元";
+        }
+
+        private void word2(object sender, RoutedEventArgs e)
+        {
+            outdata.Text = "一份豬排、一碗白飯、一碗味噌湯  價格 150元";
+        }
+
+        private void word3(object sender, RoutedEventArgs e)
+        {
+            outdata.Text = "一份薯泥、一份漢堡麵包、一份薯餅、一片豬肉排  價格 180元";
+        }
+
+        private void word4(object sender, RoutedEventArgs e)
+        {
+            outdata.Text = "一份沙拉、三片麵包、一分薯泥、兩片培根  價格 210元";
+        }
+
+       
+        void YesCommand(IUICommand command)
+        {
+            thx.Text = "祝你用餐愉快!!";
+        }
+        void NoCommand(IUICommand command)
+        {
+            
+        }
+
+
+        private void clean(object sender, RoutedEventArgs e)
+        {
+            f1.Text = "0";
+            f2.Text = "0";
+            f3.Text = "0";
+            f4.Text = "0";
+            money1.Text = "";
+        }
+
+        private void money(object sender, RoutedEventArgs e)
+        {
+            double a = double.Parse(f1.Text);
+            double b = double.Parse(f2.Text);
+            double c = double.Parse(f3.Text);
+            double d = double.Parse(f4.Text);
+            int chk_a = Convert.ToInt32(a);
+            int chk_b = Convert.ToInt32(b);
+            int chk_c = Convert.ToInt32(c);
+            int chk_d = Convert.ToInt32(d);
+           
+            
+            if (a == chk_a && b == chk_b && c == chk_c && d == chk_d)
+            {
+            total = a * 200 + b * 150 + c * 180 + d * 210;
+           
+            
+           
+            }
+            if (total > 0)
+            {
+                money1.Text = string.Concat(total);
+            }
+            else
+            {
+                var wer = new MessageDialog("請輸入整數或填入正確的點餐數量");
+                wer.ShowAsync();
+
+            }
+            
+            
+
+        }
+        private void ok(object sender, RoutedEventArgs e)
+        {
+            var dialog = new MessageDialog("資料確認送出後既完成點餐\n如果不是請按否", "確認點餐");
+            var d = new MessageDialog("資料尚未輸入或請按計算金額");
+            dialog.Commands.Add(new UICommand("是", YesCommand));
+            dialog.Commands.Add(new UICommand("否", NoCommand));
+            dialog.DefaultCommandIndex = 0;
+            dialog.CancelCommandIndex = 1;
+
+            
+
+            if (money1.Text != "")
+                dialog.ShowAsync();
+            else if(money1.Text == "" | money1.Text=="0")
+            d.ShowAsync();
+            
+           
+            
+
+        }
+        
+    }
+}
