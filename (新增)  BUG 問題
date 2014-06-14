@@ -1,0 +1,10 @@
+if (total > 0)
+            {
+                money1.Text = string.Concat(total);
+            }
+            else
+            {
+                var wer = new MessageDialog("請輸入整數或填入正確的點餐數量");
+                wer.ShowAsync();
+
+            }
